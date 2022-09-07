@@ -4,34 +4,35 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum PlayerType { Human, Robot }
-    [SerializeField] private PlayerType playerType;
-
     [Header("MOVEMENT REFERENCES")]
     [SerializeField] private float _speed;
+    [SerializeField] private float _dashSpeed;
+    [SerializeField] private float _dashTime;
     private float _runSpeed;
     private float _moveSpeed;
     [SerializeField] private float _gravity;
-    [SerializeField] private float _jumpForce;
-    [SerializeField] private float _jumpCooldown;
-    private bool _readyToJump = true;
     private float _horizontalInput;
     private float _verticalInput;
     Vector3 moveDirection;
-    bool isWalk;
+    [HideInInspector] public bool isWalk;
+    [HideInInspector] public bool isRun;
+    [HideInInspector] public bool isDash;
 
     [Header("OTHER REFERENCES")]
     [SerializeField] private Transform _orientation;
     [SerializeField] private Animator _anim;
+    [SerializeField] private GameObject _jetpack;
     private CharacterController _characterController;
     private Rigidbody _rb;
+    private PlayerCamera _playerCamera;
 
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
         _rb = GetComponent<Rigidbody>();
+        _playerCamera = FindObjectOfType<PlayerCamera>();
 
-        _runSpeed = _speed * 2;
+        _runSpeed = _speed * 2.5f;
     }
 
     void Update()
@@ -44,47 +45,64 @@ public class PlayerController : MonoBehaviour
     {
         _horizontalInput = Input.GetAxisRaw("Horizontal");
         _verticalInput = Input.GetAxisRaw("Vertical");
-
+       
         moveDirection = _orientation.forward * _verticalInput + _orientation.right * _horizontalInput;
+        moveDirection.y += Physics.gravity.y * Time.deltaTime;
 
-        Run(Input.GetKey(KeyCode.LeftShift));
+        if (_playerCamera.cameraType == PlayerCamera.CameraType.Basic) Run(Input.GetKey(KeyCode.LeftShift));
+        else Run(false);
 
-        if (Input.GetButton("Jump") && _readyToJump && _characterController.isGrounded)
+        if (_characterController.isGrounded && Input.GetButtonDown("Jump") && _playerCamera.cameraType == PlayerCamera.CameraType.Combat)
         {
-            Debug.Log("Jumped!!");
-            _readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump), _jumpCooldown);
+            StartCoroutine(Dash());
         }
-
-        moveDirection.y -= _gravity * Time.deltaTime;
+                 
         _characterController.Move(moveDirection.normalized * _moveSpeed * Time.deltaTime);
     }
 
-    private void Run(bool isRun)
+    private void Run(bool _isRun)
     {
-        _moveSpeed = isRun ? _runSpeed : _speed;
+        _moveSpeed = _isRun ? _runSpeed : _speed;
+        isRun = _isRun ? true : false;
     }
 
-    private void Jump()
+    IEnumerator Dash()
     {
-        moveDirection.y = _jumpForce;
-    }
+        float startTime = Time.time;
+        isDash = true;        
 
-    private void ResetJump()
-    {
-        _readyToJump = true;
+        while(Time.time < startTime + _dashTime)
+        {           
+            _characterController.Move(moveDirection.normalized * _dashSpeed * Time.deltaTime);
+            _anim.SetTrigger("Dash");
+            _jetpack.SetActive(true);
+            yield return null;
+        }
+
+        _jetpack.SetActive(false);
+        isDash = false;
     }
 
     private void CharacterAnimation()
     {
         if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
+            isWalk = true;
             _anim.SetBool("isWalk", true);
         }
         else
         {
+            isWalk = false;
             _anim.SetBool("isWalk", false);
+        }
+
+        if (_moveSpeed > _runSpeed - 0.1f && isWalk)
+        {
+            _anim.SetBool("isRun", true);
+        }
+        else
+        {
+            _anim.SetBool("isRun", false);
         }
     }
 }

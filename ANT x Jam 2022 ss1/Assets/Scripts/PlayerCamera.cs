@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    public enum CameraType { Basic, Combat }
+
     [Header("REFERENCES")]
     [SerializeField] private Transform _orientation;
     [SerializeField] private Transform _playerPos;
@@ -11,22 +13,58 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float _rotationSpeed;
 
+    [Header("CAMERA STYLE")]   
+    [SerializeField] private CameraType _cameraType;
+    [SerializeField] private Transform _combatLookAt;
+    [SerializeField] private GameObject _thirdPersonCam;
+    [SerializeField] private GameObject _combatCam;
+    public CameraType cameraType => _cameraType;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        SwitchCameraStyle(CameraType.Basic);
     }
 
     private void Update()
     {
+        if (Input.GetMouseButton(1)) SwitchCameraStyle(CameraType.Combat);
+        else SwitchCameraStyle(CameraType.Basic);
+    }
+
+    private void LateUpdate()
+    {
         Vector3 direction = _playerPos.position - new Vector3(transform.position.x, _playerPos.position.y, transform.position.z);
         _orientation.forward = direction.normalized;
 
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        Vector3 inputDirection = _orientation.forward * vertical + _orientation.right * horizontal;
+        if (_cameraType == CameraType.Basic)
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            Vector3 inputDirection = _orientation.forward * vertical + _orientation.right * horizontal;
 
-        if (inputDirection != Vector3.zero)
-            _playerObjPos.forward = Vector3.Slerp(_playerObjPos.forward, inputDirection.normalized, Time.deltaTime * _rotationSpeed);
+            if (inputDirection != Vector3.zero)
+                _playerObjPos.forward = Vector3.Slerp(_playerObjPos.forward, inputDirection.normalized, Time.deltaTime * _rotationSpeed);
+        }
+        else if (_cameraType == CameraType.Combat)
+        {
+            Vector3 dirToCombatLookAt = _combatLookAt.position - new Vector3(transform.position.x, _combatLookAt.position.y, transform.position.z);
+            _orientation.forward = dirToCombatLookAt.normalized;
+
+            _playerObjPos.forward = dirToCombatLookAt.normalized;
+        }
+    }
+
+    private void SwitchCameraStyle(CameraType newType)
+    {
+        _thirdPersonCam.SetActive(false);
+        _combatCam.SetActive(false);
+
+        if (newType == CameraType.Basic) _thirdPersonCam.SetActive(true);
+        if (newType == CameraType.Combat) _combatCam.SetActive(true);
+
+        _cameraType = newType;
     }
 }
