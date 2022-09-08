@@ -71,8 +71,9 @@ public class PlayerCamera : MonoBehaviour
         _thirdPersonCam.SetActive(false);
         _combatCam.SetActive(false);
 
-        if (newType == CameraType.Basic) _thirdPersonCam.SetActive(true); _lockCam.m_XAxis.Value = _tpsCam.m_XAxis.Value;
-        if (newType == CameraType.Combat) _combatCam.SetActive(true); _tpsCam.m_XAxis.Value = _lockCam.m_XAxis.Value;
+        if (newType == CameraType.Basic) _thirdPersonCam.SetActive(true); _lockCam.m_XAxis.Value = _tpsCam.m_XAxis.Value; _tpsCam.m_YAxis.Value = 0.5f;
+        if (newType == CameraType.Combat) _combatCam.SetActive(true); _tpsCam.m_XAxis.Value = _lockCam.m_XAxis.Value; _lockCam.m_YAxis.Value = 0.75f;
+        UserInterface.instance.PanelChange(newType);
 
         _cameraType = newType;
     }

@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour
     {
         Idle();
         Patrol();
-        Attack();
     }
 
     #region AI STATE
