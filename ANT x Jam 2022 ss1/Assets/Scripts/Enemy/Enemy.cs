@@ -99,4 +99,12 @@ public class Enemy : MonoBehaviour
         StateChange(AIState.Patrol);
     }
     #endregion
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+        {
+            _hp--;
+        }
+    }
 }
