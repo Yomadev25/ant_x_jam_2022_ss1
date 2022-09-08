@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 7deb916b4d39ae24d87bf78cfd1a5dea, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: d2193fd2185ed4c44b86e8adce11f12c, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3383,10 +3383,10 @@ GameObject:
   - component: {fileID: 1137296934}
   - component: {fileID: 1137296933}
   - component: {fileID: 1137296936}
-  - component: {fileID: 1137296937}
   - component: {fileID: 1137296938}
   - component: {fileID: 1137296939}
-  m_Layer: 0
+  - component: {fileID: 1137296937}
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -4834,7 +4834,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19826
+  m_Name: pb_Mesh19872
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5404,7 +5404,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519666253}
-  m_LocalRotation: {x: 0.28249413, y: 0.000000016505549, z: -0.000000004860701, w: 0.95926905}
+  m_LocalRotation: {x: 0.28249413, y: -0.000000016505547, z: 0.0000000048607007, w: 0.95926905}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
