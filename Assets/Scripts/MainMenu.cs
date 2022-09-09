@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        Transition.instance.Fade(true, sceneName);
     }
 
     public void Exit()

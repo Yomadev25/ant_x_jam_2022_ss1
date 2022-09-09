@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         _verticalInput = Input.GetAxisRaw("Vertical");
        
         moveDirection = _orientation.forward * _verticalInput + _orientation.right * _horizontalInput;
-        moveDirection.y += Physics.gravity.y * Time.deltaTime;
+        moveDirection.y += Physics.gravity.y * _gravity * Time.deltaTime;
 
         if (_playerCamera.cameraType == PlayerCamera.CameraType.Basic) Run(Input.GetKey(KeyCode.LeftShift));
         else Run(false);

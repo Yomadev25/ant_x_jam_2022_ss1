@@ -39,6 +39,8 @@ public class PlayerCamera : MonoBehaviour
     {
         if (Input.GetMouseButton(1)) SwitchCameraStyle(CameraType.Combat);
         else SwitchCameraStyle(CameraType.Basic);
+
+        if (_lockCam.m_YAxis.Value <= 0.44f) _lockCam.m_YAxis.Value = 0.44f;
     }
 
     private void LateUpdate()
