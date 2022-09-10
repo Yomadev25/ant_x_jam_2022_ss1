@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Boss : MonoBehaviour
 {
-    public enum AIState { Idle, Patrol, Attack, }
+    public enum AIState { Idle, Patrol, Attack }
     private AIState currentState;
 
     [SerializeField] private float _hp;
@@ -16,18 +16,11 @@ public class Enemy : MonoBehaviour
     private Transform _targetPos;
     private NavMeshAgent _navMesh;
 
-    [Header("GUN REFERENCES")]
-    [SerializeField] private GameObject _bulletPrefabs;
-    [SerializeField] private Transform _gunPos;
-    [SerializeField] private int _ammo;
-
-    private CapsuleCollider _collider;
     bool isDie;
 
     void Start()
     {
         _navMesh = GetComponent<NavMeshAgent>();
-        _collider = GetComponent<CapsuleCollider>();
         _targetPos = GameObject.FindGameObjectWithTag("Player").transform;
         if (_targetPos == null) this.enabled = false;
 
@@ -90,7 +83,7 @@ public class Enemy : MonoBehaviour
         {
             StateChange(AIState.Attack);
         }
-        if(_navMesh.remainingDistance >= _maxDistance)
+        if (_navMesh.remainingDistance >= _maxDistance)
         {
             StateChange(AIState.Idle);
         }
@@ -103,11 +96,11 @@ public class Enemy : MonoBehaviour
         _anim.SetBool("isPatrol", false);
         this.transform.LookAt(_targetPos.position);
 
-        for (int i = 0; i < _ammo; i++)
+        /*for (int i = 0; i < _ammo; i++)
         {
             yield return new WaitForSeconds(0.2f);
-            Instantiate(_bulletPrefabs, _gunPos.position, _gunPos.rotation);           
-        }
+            Instantiate(_bulletPrefabs, _gunPos.position, _gunPos.rotation);
+        }*/
 
         yield return new WaitForSeconds(1f);
         StateChange(AIState.Patrol);
@@ -117,7 +110,6 @@ public class Enemy : MonoBehaviour
     IEnumerator Die()
     {
         _anim.SetTrigger("Death");
-        _collider.enabled = false;
         _navMesh.isStopped = true;
         yield return new WaitForSeconds(1.5f);
         //Boom Effect;
