@@ -46,7 +46,7 @@ namespace Level1
 
         public void Complete()
         {
-            //Send to GameManager
+            GameManager.instance.StageEnd();
         }
     }
 }

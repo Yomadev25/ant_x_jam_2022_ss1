@@ -26,8 +26,8 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        CursorLock();
+        GameManager.instance.onStageEnd += CursorOn;
 
         _tpsCam = _thirdPersonCam.GetComponent<CinemachineFreeLook>();
         _lockCam = _combatCam.GetComponent<CinemachineFreeLook>();
@@ -78,5 +78,17 @@ public class PlayerCamera : MonoBehaviour
         UserInterface.instance.PanelChange(newType);
 
         _cameraType = newType;
+    }
+
+    private void CursorLock()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void CursorOn()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
