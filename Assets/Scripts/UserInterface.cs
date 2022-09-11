@@ -11,6 +11,10 @@ public class UserInterface : MonoBehaviour
     [SerializeField] private GameObject _basicPanel;
     [SerializeField] private GameObject _combatPanel;
 
+    [Header("STAGE NOTIFICATION")]
+    [SerializeField] private GameObject _stageStart;
+    [SerializeField] private GameObject _stageClear;
+
     [Header("HEALTH BAR")]
     [SerializeField] private Image _hpBar;
 
@@ -45,5 +49,15 @@ public class UserInterface : MonoBehaviour
     public void HealthBar()
     {
         _hpBar.fillAmount = _player._hp / _player._maxHp;
+    }
+
+    public void StageStart()
+    {
+        _stageStart.LeanScale(Vector3.one, 0.5f).setDelay(1f).setEaseInSine().setOnComplete(() => _stageStart.LeanScale(Vector3.zero, 0.5f).setDelay(1.5f).setEaseOutSine());
+    }
+
+    public void StageClear(string sceneName)
+    {
+        _stageClear.LeanScale(Vector3.one, 0.5f).setEaseInSine().setOnComplete(() => _stageClear.LeanScale(Vector3.zero, 0.5f).setDelay(1.5f).setEaseOutSine().setOnComplete(() => Transition.instance.Fade(true, sceneName)));
     }
 }

@@ -17,6 +17,7 @@ namespace Level1
         [SerializeField] private TMP_Text _scoreText;
 
         private int _enemyCount;
+        bool isComplete;
 
         private void Awake()
         {
@@ -28,6 +29,7 @@ namespace Level1
 
         void Start()
         {
+            UserInterface.instance.StageStart();
             _enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
         }
 
@@ -46,7 +48,12 @@ namespace Level1
 
         public void Complete()
         {
+            if (isComplete) return;
+            isComplete = true;
+
             GameManager.instance.StageEnd();
+            UserInterface.instance.StageClear("Level2");
+            //Transition.instance.Fade(true, "Level2");
         }
     }
 }

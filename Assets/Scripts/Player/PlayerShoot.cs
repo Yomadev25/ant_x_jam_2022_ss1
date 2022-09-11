@@ -65,4 +65,9 @@ public class PlayerShoot : MonoBehaviour
             _jetpack.SetActive(false);
         }
     }
+
+    private void OnDisable()
+    {
+        _anim.SetBool("isShoot", false);
+    }
 }

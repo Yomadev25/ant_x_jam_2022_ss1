@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         GameManager.instance.onStageStart += OnStart;
+        GameManager.instance.onStageEnd += OnStop;
 
         _playerController = GetComponent<PlayerController>();
         _playerShoot = GetComponent<PlayerShoot>();

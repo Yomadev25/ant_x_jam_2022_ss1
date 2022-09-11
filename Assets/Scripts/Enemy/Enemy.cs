@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _ammo;
 
     private CapsuleCollider _collider;
+    private Level1.LevelManager _levelManager1;
     bool isDie;
 
     void Start()
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour
         _navMesh = GetComponent<NavMeshAgent>();
         _collider = GetComponent<CapsuleCollider>();
         _targetPos = GameObject.FindGameObjectWithTag("Player").transform;
+        _levelManager1 = FindObjectOfType<Level1.LevelManager>();
         if (_targetPos == null) this.enabled = false;
 
         StateChange(AIState.Idle);
@@ -116,6 +118,8 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
+        if (_levelManager1 != null) _levelManager1.GetScore(1);
+
         _anim.SetTrigger("Death");
         _collider.enabled = false;
         _navMesh.isStopped = true;
@@ -129,7 +133,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            _hp--;
+            _hp--;          
         }
     }
 }

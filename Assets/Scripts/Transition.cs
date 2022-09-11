@@ -39,7 +39,7 @@ public class Transition : MonoBehaviour
         }
         else
         {
-            _panel.LeanAlpha(0, _fadeSpeed);
+            _panel.LeanAlpha(0, _fadeSpeed).setDelay(1f);
         }
     }
 

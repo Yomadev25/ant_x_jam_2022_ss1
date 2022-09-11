@@ -16,6 +16,11 @@ public class Boss : MonoBehaviour
     private Transform _targetPos;
     private NavMeshAgent _navMesh;
 
+    [Header("GUN REFERENCES")]
+    [SerializeField] private GameObject _bulletPrefabs;
+    [SerializeField] private Transform[] _gunPos;
+    [SerializeField] private int _ammo;
+
     bool isDie;
 
     void Start()
@@ -92,18 +97,60 @@ public class Boss : MonoBehaviour
     IEnumerator Attack() //ATTACK PLAYER
     {
         if (currentState != AIState.Attack) yield return null;
+
+        int index = Random.Range(0, 3);
+        switch (index)
+        {
+            case 0:
+                NormalShoot();
+                break;
+            case 1:
+                Missile();
+                break;
+            case 2:
+                Stomp();
+                break;
+            case 3:
+                Dash();
+                break;
+        }
+    }
+
+    IEnumerator NormalShoot()
+    {
         _navMesh.isStopped = true;
         _anim.SetBool("isPatrol", false);
         this.transform.LookAt(_targetPos.position);
 
-        /*for (int i = 0; i < _ammo; i++)
+        for (int i = 0; i < _ammo; i++)
         {
             yield return new WaitForSeconds(0.2f);
-            Instantiate(_bulletPrefabs, _gunPos.position, _gunPos.rotation);
-        }*/
+            Instantiate(_bulletPrefabs, _gunPos[0].position, _gunPos[0].rotation);
+            Instantiate(_bulletPrefabs, _gunPos[1].position, _gunPos[1].rotation);
+        }
 
         yield return new WaitForSeconds(1f);
         StateChange(AIState.Patrol);
+    }
+
+    void Missile()
+    {
+        
+    }
+
+    void Stomp()
+    {
+
+    }
+
+    void Dash()
+    {
+
+    }
+
+    void Rest()
+    {
+
     }
     #endregion
 

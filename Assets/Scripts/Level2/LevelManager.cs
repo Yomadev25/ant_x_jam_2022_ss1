@@ -11,11 +11,15 @@ namespace Level2
 
         [Header("REFERENCES")]
         [SerializeField] private int _score;
+        [SerializeField] private GameObject _door;
+        [SerializeField] private GameObject _doorCam;
 
         [Header("USER INTERFACE")]
         [SerializeField] private TMP_Text _scoreText;
+        [SerializeField] private TMP_Text _doorText;
 
         private int _keyCount;
+        bool isComplete;
 
         void Awake()
         {
@@ -25,27 +29,47 @@ namespace Level2
                 Destroy(this.gameObject);
         }
 
-        private void Start()
+        IEnumerator Start()
         {
+
             _keyCount = GameObject.FindGameObjectsWithTag("Key").Length;
+
+            yield return new WaitForSeconds(1f);
+            _doorCam.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            _doorCam.SetActive(false);
+
+            UserInterface.instance.StageStart();
         }
 
         void Update()
         {
             if (_score >= _keyCount)
             {
-                Complete();
+                if (!isComplete) StartCoroutine(Complete());
             }
         }
 
         public void GetScore()
         {
             _score++;
+            _doorText.text = "KEY : " + (_keyCount - _score).ToString();
         }
 
-        public void Complete()
+        public IEnumerator Complete()
         {
-            GameManager.instance.StageEnd();
+            isComplete = true;
+            _doorCam.SetActive(true);
+
+            yield return new WaitForSeconds(1f);
+
+            _door.LeanMoveLocalY(-4f, 0.5f);
+            _doorText.text = "OPEN";
+            _doorText.color = Color.green;
+
+            yield return new WaitForSeconds(1f);
+
+            _doorCam.SetActive(false);
         }
     }
 }
