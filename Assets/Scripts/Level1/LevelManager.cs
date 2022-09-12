@@ -31,6 +31,8 @@ namespace Level1
         {
             UserInterface.instance.StageStart();
             _enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+            _scoreText.text = "Destroy all robot \n" + _score.ToString() + "/" + _enemyCount.ToString();
         }
 
         void Update()
@@ -44,6 +46,7 @@ namespace Level1
         public void GetScore(int score)
         {
             _score += score;
+            _scoreText.text = "Destroy all robot \n" + _score.ToString() + "/" + _enemyCount.ToString();
         }
 
         public void Complete()

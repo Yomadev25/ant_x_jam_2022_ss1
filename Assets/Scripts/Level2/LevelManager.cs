@@ -31,8 +31,8 @@ namespace Level2
 
         IEnumerator Start()
         {
-
             _keyCount = GameObject.FindGameObjectsWithTag("Key").Length;
+            _scoreText.text = "Collect all key \n" + _score.ToString() + "/" + _keyCount.ToString();
 
             yield return new WaitForSeconds(1f);
             _doorCam.SetActive(true);
@@ -54,6 +54,7 @@ namespace Level2
         {
             _score++;
             _doorText.text = "KEY : " + (_keyCount - _score).ToString();
+            _scoreText.text = "Collect all key \n" + _score.ToString() + "/" + _keyCount.ToString();
         }
 
         public IEnumerator Complete()

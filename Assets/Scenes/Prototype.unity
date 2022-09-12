@@ -152,8 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c98f6c3eed4d614ca131aad17dff9f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portal: {fileID: 1247175001}
-  enemyCount: 1
 --- !u!4 &40470470
 Transform:
   m_ObjectHideFlags: 0
@@ -626,7 +624,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a73f8dc2a158443b3854dfa07f92f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Level2
 --- !u!1 &1346892182
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +943,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh59728
+  m_Name: pb_Mesh90938
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

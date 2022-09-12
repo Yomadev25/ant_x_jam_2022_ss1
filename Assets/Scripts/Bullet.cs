@@ -6,7 +6,9 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float secondsUntilDestroy;
+    [SerializeField] private GameObject _effect;
     float startTime;
+
 
     void Start()
     {
@@ -21,6 +23,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(this.gameObject);
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        {
+            Instantiate(_effect, transform.position, transform.rotation);
+            Destroy(this.gameObject);
+        }
     }
 }

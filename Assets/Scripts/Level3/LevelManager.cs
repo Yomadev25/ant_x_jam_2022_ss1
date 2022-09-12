@@ -28,6 +28,9 @@ namespace Level3
         private void Start()
         {
             _keyCount = GameObject.FindGameObjectsWithTag("Key").Length;
+            _scoreText.text = "Destroy all panel \n" + _score.ToString() + "/" + _keyCount.ToString();
+
+            UserInterface.instance.StageStart();
         }
 
         void Update()
@@ -41,11 +44,12 @@ namespace Level3
         public void GetScore()
         {
             _score++;
+            _scoreText.text = "Destroy all panel \n" + _score.ToString() + "/" + _keyCount.ToString();
         }
 
         public void Complete()
         {
-            GameManager.instance.StageEnd();
+            UserInterface.instance.StageClear("Level4");
         }
     }
 }

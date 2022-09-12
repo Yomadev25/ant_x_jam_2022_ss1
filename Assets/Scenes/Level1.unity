@@ -1376,10 +1376,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3961162818491811155, guid: c1f2a2526ea29a74ab372d29ef497c9a, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3986255748701019168, guid: c1f2a2526ea29a74ab372d29ef497c9a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1467,10 +1463,6 @@ PrefabInstance:
     - target: {fileID: 3986255748701019172, guid: c1f2a2526ea29a74ab372d29ef497c9a, type: 3}
       propertyPath: m_Name
       value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 5442124883843676748, guid: c1f2a2526ea29a74ab372d29ef497c9a, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1f2a2526ea29a74ab372d29ef497c9a, type: 3}
@@ -2028,6 +2020,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787227214}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1846158353 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1467260773, guid: c1f2a2526ea29a74ab372d29ef497c9a, type: 3}
+  m_PrefabInstance: {fileID: 721903806}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1899047704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1941232739473613381, guid: fcc3f855034b88346ab99ece7ccf4ccf, type: 3}
@@ -2077,7 +2080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _score: 0
-  _scoreText: {fileID: 0}
+  _scoreText: {fileID: 1846158353}
 --- !u!1 &1938686811
 GameObject:
   m_ObjectHideFlags: 0

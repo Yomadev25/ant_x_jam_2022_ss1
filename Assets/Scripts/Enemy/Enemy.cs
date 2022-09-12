@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform _gunPos;
     [SerializeField] private int _ammo;
 
+    [SerializeField] private GameObject _effect;
+
     private CapsuleCollider _collider;
     private Level1.LevelManager _levelManager1;
     bool isDie;
@@ -124,7 +126,7 @@ public class Enemy : MonoBehaviour
         _collider.enabled = false;
         _navMesh.isStopped = true;
         yield return new WaitForSeconds(1.5f);
-        //Boom Effect;
+        Instantiate(_effect, transform.position + new Vector3(0, 1, 0), transform.rotation);
 
         Destroy(this.gameObject);
     }

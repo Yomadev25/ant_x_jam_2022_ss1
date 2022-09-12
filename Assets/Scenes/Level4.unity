@@ -307,6 +307,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5442124883843676748, guid: c1f2a2526ea29a74ab372d29ef497c9a, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1f2a2526ea29a74ab372d29ef497c9a, type: 3}
 --- !u!1 &247295862
@@ -1763,7 +1767,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24236
+  m_Name: pb_Mesh111262
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2439,7 +2443,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24284
+  m_Name: pb_Mesh111326
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

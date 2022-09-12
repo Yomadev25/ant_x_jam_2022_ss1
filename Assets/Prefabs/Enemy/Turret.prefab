@@ -136,12 +136,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f75c84add5a089a4db4686acdc9601ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 10
+  _hp: 20
   _maxDistance: 10
   _headPos: {fileID: 410594371879499447}
   _bulletPrefabs: {fileID: 5196976113287994801, guid: 1537a817cc4249245abe58722d4b6262, type: 3}
   _gunPos: {fileID: 410594371050521508}
   _ammo: 3
+  _effect: {fileID: 4162418310141134395, guid: ad0c82b5136e1674c9a1d6c54c738ac4, type: 3}
 --- !u!65 &410594370913494233
 BoxCollider:
   m_ObjectHideFlags: 0

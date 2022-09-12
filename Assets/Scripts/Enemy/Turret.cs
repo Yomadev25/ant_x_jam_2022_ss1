@@ -19,6 +19,8 @@ public class Turret : MonoBehaviour
     [SerializeField] private Transform _gunPos;
     [SerializeField] private int _ammo;
 
+    [SerializeField] private GameObject _effect;
+
     private BoxCollider _collider;
     private Level1.LevelManager _levelManager1;
     bool isDie;
@@ -102,9 +104,10 @@ public class Turret : MonoBehaviour
         if (_levelManager1 != null) _levelManager1.GetScore(1);
 
         _collider.enabled = false;
-        yield return new WaitForSeconds(0.5f);
-        //Boom Effect;
+        Instantiate(_effect, transform.position, transform.rotation);
         Destroy(this.gameObject);
+
+        yield return null;
     }
 
     private void OnTriggerEnter(Collider other)
