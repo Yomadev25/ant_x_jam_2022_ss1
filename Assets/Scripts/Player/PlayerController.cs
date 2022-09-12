@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _orientation;
     [SerializeField] private Animator _anim;
     [SerializeField] private GameObject _jetpack;
+    [SerializeField] private AudioSource _dashSound;
     private CharacterController _characterController;
     private Rigidbody _rb;
     private PlayerCamera _playerCamera;
@@ -69,9 +70,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator Dash()
     {
         float startTime = Time.time;
-        isDash = true;        
+        isDash = true;
+        _dashSound.Play();
 
-        while(Time.time < startTime + _dashTime)
+        while (Time.time < startTime + _dashTime)
         {           
             _characterController.Move(moveDirection.normalized * _dashSpeed * Time.deltaTime);
             _anim.SetTrigger("Dash");

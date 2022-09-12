@@ -14,6 +14,8 @@ public class UserInterface : MonoBehaviour
     [Header("STAGE NOTIFICATION")]
     [SerializeField] private GameObject _stageStart;
     [SerializeField] private GameObject _stageClear;
+    [SerializeField] private AudioSource _startSound;
+    [SerializeField] private AudioSource _clearSound;
 
     [Header("HEALTH BAR")]
     [SerializeField] private Image _hpBar;
@@ -53,11 +55,13 @@ public class UserInterface : MonoBehaviour
 
     public void StageStart()
     {
+        //_startSound.Play();
         _stageStart.LeanScale(Vector3.one, 0.5f).setDelay(1f).setEaseInSine().setOnComplete(() => _stageStart.LeanScale(Vector3.zero, 0.5f).setDelay(1.5f).setEaseOutSine());
     }
 
     public void StageClear(string sceneName)
     {
+        _clearSound.Play();
         _stageClear.LeanScale(Vector3.one, 0.5f).setEaseInSine().setOnComplete(() => _stageClear.LeanScale(Vector3.zero, 0.5f).setDelay(1.5f).setEaseOutSine().setOnComplete(() => Transition.instance.Fade(true, sceneName)));
     }
 }

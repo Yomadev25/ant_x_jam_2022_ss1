@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private PlayerShoot _playerShoot;
     private PlayerCamera _playerCamera;
     [SerializeField] private Animator _anim;
+    [SerializeField] private AudioSource _hitSound;
 
     bool isDie;
 
@@ -65,6 +66,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag("EnemyBullet"))
         {
             TakeDamage(1f);
+            _hitSound.Play();
         }
     }
 

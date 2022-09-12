@@ -13,7 +13,7 @@ public class PlayerShoot : MonoBehaviour
     [Header("SHOOTING REFERENCE")]
     [SerializeField] private float _fireRate;
     [SerializeField] private float _nextFire;
-
+    [SerializeField] private AudioSource _shootSound;
     [SerializeField] private GameObject _jetpack;
     [SerializeField] private Animator _anim;
 
@@ -48,7 +48,8 @@ public class PlayerShoot : MonoBehaviour
 
     void Fire()
     {
-        Instantiate(_bulletPrefab, _shootPos.position, _shootPos.rotation);     
+        Instantiate(_bulletPrefab, _shootPos.position, _shootPos.rotation);
+        _shootSound.Play();
     }
 
     void FireAnimation()

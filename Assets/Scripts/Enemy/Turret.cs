@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Turret : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Turret : MonoBehaviour
     private AIState currentState;
 
     [SerializeField] private float _hp;
+    private float _maxHp;
 
     [Header("AI REFERENCES")]
     [SerializeField] private float _maxDistance;
@@ -18,8 +20,16 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefabs;
     [SerializeField] private Transform _gunPos;
     [SerializeField] private int _ammo;
-
     [SerializeField] private GameObject _effect;
+
+    [Header("HEALTH BAR")]
+    [SerializeField] private GameObject _hpPanel;
+    [SerializeField] private CanvasGroup _hpCanvasGroup;
+    [SerializeField] private Image _hpBar;
+
+    [Header("SOUND EFFECT")]
+    [SerializeField] private AudioSource _gunSound;
+    [SerializeField] private AudioSource _hitSound;
 
     private BoxCollider _collider;
     private Level1.LevelManager _levelManager1;
@@ -31,6 +41,7 @@ public class Turret : MonoBehaviour
         _targetPos = GameObject.FindGameObjectWithTag("Player").transform;
         _levelManager1 = FindObjectOfType<Level1.LevelManager>();
         if (_targetPos == null) this.enabled = false;
+        _maxHp = _hp;
 
         StateChange(AIState.Idle);
     }
@@ -47,6 +58,11 @@ public class Turret : MonoBehaviour
         {
             Idle();
         }
+
+        _hpBar.fillAmount = _hp / _maxHp;
+        _hpPanel.transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
+        if (Vector3.Magnitude(this.transform.position - _targetPos.transform.position) <= 20f) _hpCanvasGroup.alpha = 1;
+        else _hpCanvasGroup.alpha = 0;
     }
 
     #region AI STATE
@@ -92,6 +108,7 @@ public class Turret : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             Instantiate(_bulletPrefabs, _gunPos.position, _gunPos.rotation);
+            _gunSound.Play();
         }
 
         yield return new WaitForSeconds(1f);
@@ -115,6 +132,7 @@ public class Turret : MonoBehaviour
         if (other.CompareTag("Bullet"))
         {
             _hp--;
+            _hitSound.Play();
         }
     }
 }

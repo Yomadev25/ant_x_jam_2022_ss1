@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Enemy : MonoBehaviour
     private AIState currentState;
 
     [SerializeField] private float _hp;
+    private float _maxHp;
 
     [Header("AI REFERENCES")]
     [SerializeField] private float _maxDistance;
@@ -20,8 +22,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefabs;
     [SerializeField] private Transform _gunPos;
     [SerializeField] private int _ammo;
-
     [SerializeField] private GameObject _effect;
+
+    [Header("HEALTH BAR")]
+    [SerializeField] private GameObject _hpPanel;
+    [SerializeField] private CanvasGroup _hpCanvasGroup;
+    [SerializeField] private Image _hpBar;
+
+    [Header("SOUND EFFECT")]
+    [SerializeField] private AudioSource _gunSound;
+    [SerializeField] private AudioSource _hitSound;
 
     private CapsuleCollider _collider;
     private Level1.LevelManager _levelManager1;
@@ -34,6 +44,7 @@ public class Enemy : MonoBehaviour
         _targetPos = GameObject.FindGameObjectWithTag("Player").transform;
         _levelManager1 = FindObjectOfType<Level1.LevelManager>();
         if (_targetPos == null) this.enabled = false;
+        _maxHp = _hp;
 
         StateChange(AIState.Idle);
     }
@@ -51,6 +62,11 @@ public class Enemy : MonoBehaviour
             Idle();
             Patrol();
         }
+
+        _hpBar.fillAmount = _hp / _maxHp;
+        _hpPanel.transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
+        if (Vector3.Magnitude(this.transform.position - _targetPos.transform.position) <= 20f) _hpCanvasGroup.alpha = 1;
+        else _hpCanvasGroup.alpha = 0;
     }
 
     #region AI STATE
@@ -110,7 +126,8 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < _ammo; i++)
         {
             yield return new WaitForSeconds(0.2f);
-            Instantiate(_bulletPrefabs, _gunPos.position, _gunPos.rotation);           
+            Instantiate(_bulletPrefabs, _gunPos.position, _gunPos.rotation);
+            _gunSound.Play();
         }
 
         yield return new WaitForSeconds(1f);
@@ -135,7 +152,8 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            _hp--;          
+            _hp--;
+            _hitSound.Play();
         }
     }
 }

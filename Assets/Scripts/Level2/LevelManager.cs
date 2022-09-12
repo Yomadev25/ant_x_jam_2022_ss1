@@ -13,6 +13,7 @@ namespace Level2
         [SerializeField] private int _score;
         [SerializeField] private GameObject _door;
         [SerializeField] private GameObject _doorCam;
+        [SerializeField] private AudioSource _doorSound;
 
         [Header("USER INTERFACE")]
         [SerializeField] private TMP_Text _scoreText;
@@ -67,6 +68,7 @@ namespace Level2
             _door.LeanMoveLocalY(-4f, 0.5f);
             _doorText.text = "OPEN";
             _doorText.color = Color.green;
+            _doorSound.Play();
 
             yield return new WaitForSeconds(1f);
 
