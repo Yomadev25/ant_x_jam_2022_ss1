@@ -14,4 +14,9 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void OpenLink(string URL)
+    {
+        Application.OpenURL(URL);
+    }
 }

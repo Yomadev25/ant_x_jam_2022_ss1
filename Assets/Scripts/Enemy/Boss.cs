@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Boss : MonoBehaviour
     private AIState currentState;
 
     [SerializeField] private float _hp;
+    private float _maxHp;
+    [SerializeField] private Image _hpBar;
 
     [Header("AI REFERENCES")]
     [SerializeField] private float _maxDistance;
@@ -21,6 +24,10 @@ public class Boss : MonoBehaviour
     [SerializeField] private Transform[] _gunPos;
     [SerializeField] private int _ammo;
 
+    [Header("EFFECTS")]
+    [SerializeField] private GameObject _dieEffect;
+
+    bool isAttack;
     bool isDie;
 
     void Start()
@@ -28,6 +35,7 @@ public class Boss : MonoBehaviour
         _navMesh = GetComponent<NavMeshAgent>();
         _targetPos = GameObject.FindGameObjectWithTag("Player").transform;
         if (_targetPos == null) this.enabled = false;
+        _maxHp = _hp;
 
         StateChange(AIState.Idle);
     }
@@ -45,6 +53,8 @@ public class Boss : MonoBehaviour
             Idle();
             Patrol();
         }
+
+        _hpBar.fillAmount = _hp / _maxHp;
     }
 
     #region AI STATE
@@ -62,12 +72,13 @@ public class Boss : MonoBehaviour
                 StartCoroutine(Attack());
                 break;
         }
-        currentState = state;
+        currentState = state;       
     }
 
     private void Idle() //CHECK PLAYER
-    {
+    {       
         if (currentState != AIState.Idle) return;
+        Debug.Log("BOSS IS IDLE");
         _navMesh.isStopped = true;
         _anim.SetBool("isPatrol", false);
 
@@ -78,8 +89,9 @@ public class Boss : MonoBehaviour
     }
 
     private void Patrol() //CHASE PLAYER
-    {
+    {      
         if (currentState != AIState.Patrol) return;
+        Debug.Log("BOSS IS PATROL");
         _navMesh.isStopped = false;
         _navMesh.destination = _targetPos.position;
         _anim.SetBool("isPatrol", true);
@@ -95,16 +107,17 @@ public class Boss : MonoBehaviour
     }
 
     IEnumerator Attack() //ATTACK PLAYER
-    {
+    {      
         if (currentState != AIState.Attack) yield return null;
+        Debug.Log("BOSS IS ATTACK");
 
-        int index = Random.Range(0, 3);
+        int index = 0; //Random
         switch (index)
         {
             case 0:
                 NormalShoot();
                 break;
-            case 1:
+            /*case 1:
                 Missile();
                 break;
             case 2:
@@ -112,15 +125,21 @@ public class Boss : MonoBehaviour
                 break;
             case 3:
                 Dash();
-                break;
+                break;*/
         }
     }
 
     IEnumerator NormalShoot()
     {
-        _navMesh.isStopped = true;
-        _anim.SetBool("isPatrol", false);
+        if (isAttack) yield return null;
+
+        Debug.Log("BOSS IS ATTACK BY NORMAL SHOOT");
+        isAttack = true;
+        _navMesh.isStopped = true;       
         this.transform.LookAt(_targetPos.position);
+        _gunPos[0].LookAt(_targetPos.position);
+        _gunPos[1].LookAt(_targetPos.position);
+        _anim.SetBool("isPatrol", false);
 
         for (int i = 0; i < _ammo; i++)
         {
@@ -130,6 +149,7 @@ public class Boss : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
+        isAttack = false;
         StateChange(AIState.Patrol);
     }
 
@@ -156,12 +176,10 @@ public class Boss : MonoBehaviour
 
     IEnumerator Die()
     {
+        Instantiate(_dieEffect, transform.position, transform.rotation);
         _anim.SetTrigger("Death");
         _navMesh.isStopped = true;
-        yield return new WaitForSeconds(1.5f);
-        //Boom Effect;
-
-        Destroy(this.gameObject);
+        yield return new WaitForSeconds(1.5f);       
     }
 
     private void OnTriggerEnter(Collider other)

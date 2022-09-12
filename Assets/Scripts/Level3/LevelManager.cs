@@ -16,6 +16,7 @@ namespace Level3
         [SerializeField] private TMP_Text _scoreText;
 
         private int _keyCount;
+        bool isComplete;
 
         void Awake()
         {
@@ -37,7 +38,7 @@ namespace Level3
         {
             if (_score >= _keyCount)
             {
-                Complete();
+                if (!isComplete) Complete();
             }
         }
 
@@ -49,6 +50,7 @@ namespace Level3
 
         public void Complete()
         {
+            isComplete = true;
             UserInterface.instance.StageClear("Level4");
         }
     }
