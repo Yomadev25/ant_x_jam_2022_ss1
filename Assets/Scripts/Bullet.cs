@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        if (other.CompareTag("Player") || other.CompareTag("Enemy") || other.CompareTag("Wall"))
         {
             Instantiate(_effect, transform.position, transform.rotation);
             Destroy(this.gameObject);

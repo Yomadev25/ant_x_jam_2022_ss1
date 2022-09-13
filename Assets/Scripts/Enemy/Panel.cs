@@ -9,6 +9,7 @@ public class Panel : MonoBehaviour
     private float _maxHp;
     [SerializeField] private GameObject _effect;
     private Transform _targetPos;
+    [SerializeField] private GameObject _enemySet;
 
     [Header("HEALTH BAR")]
     [SerializeField] private GameObject _hpPanel;
@@ -18,6 +19,7 @@ public class Panel : MonoBehaviour
     [Header("SOUND EFFECT")]
     [SerializeField] private AudioSource _gunSound;
     [SerializeField] private AudioSource _hitSound;
+
 
     bool isDie;
 
@@ -45,6 +47,7 @@ public class Panel : MonoBehaviour
     void Die()
     {
         FindObjectOfType<Level3.LevelManager>().GetScore();
+        _enemySet.SetActive(true);
         Instantiate(_effect, transform.position, transform.rotation);
         Destroy(this.gameObject);
     }
