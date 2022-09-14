@@ -23,10 +23,13 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Enemy") || other.CompareTag("Wall"))
+        if (this.tag != "BossBullet")
         {
-            Instantiate(_effect, transform.position, transform.rotation);
-            Destroy(this.gameObject);
+            if (other.CompareTag("Player") || other.CompareTag("Enemy") || other.CompareTag("Wall"))
+            {
+                Instantiate(_effect, transform.position, transform.rotation);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

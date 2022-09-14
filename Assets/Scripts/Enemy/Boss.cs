@@ -21,13 +21,17 @@ public class Boss : MonoBehaviour
 
     [Header("GUN REFERENCES")]
     [SerializeField] private GameObject _bulletPrefabs;
+    [SerializeField] private GameObject _missilePrefabs;
+    [SerializeField] private GameObject _lineOfSight;
     [SerializeField] private Transform[] _gunPos;
     [SerializeField] private int _ammo;
 
     [Header("EFFECTS")]
     [SerializeField] private GameObject _dieEffect;
 
+    bool isPhaseTwo = false;
     bool isAttack;
+    bool isRest;
     bool isDie;
 
     void Start()
@@ -51,7 +55,7 @@ public class Boss : MonoBehaviour
         else
         {
             Idle();
-            Patrol();
+            if(!isRest) Patrol();
         }
 
         _hpBar.fillAmount = _hp / _maxHp;
@@ -82,7 +86,7 @@ public class Boss : MonoBehaviour
         _navMesh.isStopped = true;
         _anim.SetBool("isPatrol", false);
 
-        if (Vector3.Magnitude((this.transform.position - _targetPos.transform.position)) <= _maxDistance)
+        if (Vector3.Magnitude((this.transform.position - _targetPos.transform.position)) <= _maxDistance && !isRest)
         {
             StateChange(AIState.Patrol);
         }
@@ -111,16 +115,16 @@ public class Boss : MonoBehaviour
         if (currentState != AIState.Attack) yield return null;
         Debug.Log("BOSS IS ATTACK");
 
-        int index = 0; //Random
+        int index = Random.Range(0, 2); //Random
         switch (index)
         {
             case 0:
-                NormalShoot();
+                StartCoroutine(NormalShoot());
                 break;
-            /*case 1:
-                Missile();
+            case 1:
+                StartCoroutine(Missile());
                 break;
-            case 2:
+            /*case 2:
                 Stomp();
                 break;
             case 3:
@@ -135,10 +139,11 @@ public class Boss : MonoBehaviour
 
         Debug.Log("BOSS IS ATTACK BY NORMAL SHOOT");
         isAttack = true;
+
         _navMesh.isStopped = true;       
         this.transform.LookAt(_targetPos.position);
         _gunPos[0].LookAt(_targetPos.position);
-        _gunPos[1].LookAt(_targetPos.position);
+        _gunPos[1].LookAt(_targetPos.position);      
         _anim.SetBool("isPatrol", false);
 
         for (int i = 0; i < _ammo; i++)
@@ -153,9 +158,38 @@ public class Boss : MonoBehaviour
         StateChange(AIState.Patrol);
     }
 
-    void Missile()
+    IEnumerator Missile()
     {
-        
+        if (isAttack) yield return null;
+
+        Debug.Log("BOSS IS ATTACK BY MISSILE");
+        isAttack = true;
+
+        _navMesh.isStopped = true;
+        this.transform.LookAt(_targetPos.position);
+        _lineOfSight.SetActive(true);
+        _anim.SetBool("isPatrol", false);
+
+        float duration = 3f;
+        while (duration > 0)
+        {
+            _gunPos[0].LookAt(_targetPos.position);
+            _gunPos[1].LookAt(_targetPos.position);
+            duration -= Time.deltaTime;
+            yield return null;
+        }
+        _lineOfSight.SetActive(false);
+
+        Instantiate(_missilePrefabs, _gunPos[0].transform.position, _gunPos[0].transform.rotation);
+        if (isPhaseTwo)
+        {
+            yield return new WaitForSeconds(0.1f);
+            Instantiate(_missilePrefabs, _gunPos[1].transform.position, _gunPos[1].transform.rotation);
+        }
+
+        yield return new WaitForSeconds(1f);
+        isAttack = false;
+        StateChange(AIState.Patrol);
     }
 
     void Stomp()
@@ -168,9 +202,9 @@ public class Boss : MonoBehaviour
 
     }
 
-    void Rest()
+    public void Rest(bool _isrest)
     {
-
+        isRest = _isrest;
     }
     #endregion
 

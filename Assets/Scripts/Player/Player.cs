@@ -63,10 +63,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyBullet"))
+        if (other.CompareTag("EnemyBullet") || other.CompareTag("BossBullet"))
         {
             TakeDamage(1f);
             _hitSound.Play();
+        }
+        if (other.CompareTag("EnemyMissile"))
+        {
+            TakeDamage(5f);
         }
     }
 
