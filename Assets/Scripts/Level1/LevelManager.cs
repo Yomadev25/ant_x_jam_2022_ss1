@@ -25,13 +25,13 @@ namespace Level1
                 instance = this;
             else
                 Destroy(this.gameObject);
+
+            _enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
         }
 
         void Start()
-        {
+        {                       
             UserInterface.instance.StageStart();
-            _enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-
             _scoreText.text = "Destroy all robot \n" + _score.ToString() + "/" + _enemyCount.ToString();
         }
 

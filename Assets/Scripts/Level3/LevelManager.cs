@@ -11,6 +11,9 @@ namespace Level3
 
         [Header("REFERENCES")]
         [SerializeField] private int _score;
+        [SerializeField] private GameObject _door;
+        [SerializeField] private GameObject _doorCam;
+        [SerializeField] private AudioSource _doorSound;
 
         [Header("USER INTERFACE")]
         [SerializeField] private TMP_Text _scoreText;
@@ -26,10 +29,15 @@ namespace Level3
                 Destroy(this.gameObject);
         }
 
-        private void Start()
+        IEnumerator Start()
         {
             _keyCount = GameObject.FindGameObjectsWithTag("Key").Length;
             _scoreText.text = "Destroy all panel \n" + _score.ToString() + "/" + _keyCount.ToString();
+
+            yield return new WaitForSeconds(1f);
+            _doorCam.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            _doorCam.SetActive(false);
 
             UserInterface.instance.StageStart();
         }
@@ -38,7 +46,7 @@ namespace Level3
         {
             if (_score >= _keyCount)
             {
-                if (!isComplete) Complete();
+                if (!isComplete) StartCoroutine(Complete());
             }
         }
 
@@ -48,10 +56,16 @@ namespace Level3
             _scoreText.text = "Destroy all panel \n" + _score.ToString() + "/" + _keyCount.ToString();
         }
 
-        public void Complete()
+        public IEnumerator Complete()
         {
             isComplete = true;
-            UserInterface.instance.StageClear("Level4");
+            _doorCam.SetActive(true);
+            _door.LeanMoveLocalY(-4f, 0.5f);
+            _doorSound.Play();
+
+            yield return new WaitForSeconds(1f);
+
+            _doorCam.SetActive(false);
         }
     }
 }

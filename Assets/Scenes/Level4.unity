@@ -2310,7 +2310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 106d522b87424724d9f92402e1297276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 1000
+  _hp: 700
   _hpBar: {fileID: 1626524264}
   _maxDistance: 30
   _anim: {fileID: 95195968505438104}

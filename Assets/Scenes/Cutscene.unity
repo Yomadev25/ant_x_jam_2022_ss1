@@ -504,7 +504,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387557527}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: aa0241600a1a88f4cae9ab91a4db5abc, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: b2540d41192d7504c83bd5d1bfff2405, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -580,7 +580,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -88.635864, y: -78.99689}
+  m_AnchoredPosition: {x: -88.63574, y: -78.996826}
   m_SizeDelta: {x: 128.8249, y: 104.2251}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1392755738
@@ -668,10 +668,10 @@ MonoBehaviour:
       - m_Target: {fileID: 1075108674}
         m_TargetAssemblyTypeName: Cutscene, Assembly-CSharp
         m_MethodName: ChangeScene
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1387557528}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Video.VideoPlayer, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

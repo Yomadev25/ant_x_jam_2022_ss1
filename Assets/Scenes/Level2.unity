@@ -458,7 +458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3508589598479870907, guid: a660849689ff8af42be380029c597cf2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.24071725
+      value: 0.24071723
       objectReference: {fileID: 0}
     - target: {fileID: 3508589598479870907, guid: a660849689ff8af42be380029c597cf2, type: 3}
       propertyPath: m_LocalRotation.y
@@ -466,7 +466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3508589598479870907, guid: a660849689ff8af42be380029c597cf2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.24071722
+      value: -0.24071719
       objectReference: {fileID: 0}
     - target: {fileID: 3508589598714693776, guid: a660849689ff8af42be380029c597cf2, type: 3}
       propertyPath: m_RootOrder
@@ -2292,6 +2292,10 @@ PrefabInstance:
     - target: {fileID: 7103153012782714218, guid: cb2b3ede0d6bb204099378be1870ac8a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917349904687423284, guid: cb2b3ede0d6bb204099378be1870ac8a, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: 7917349904687423284, guid: cb2b3ede0d6bb204099378be1870ac8a, type: 3}
       propertyPath: m_NavMeshLayer

@@ -47,7 +47,7 @@ public class Panel : MonoBehaviour
     void Die()
     {
         FindObjectOfType<Level3.LevelManager>().GetScore();
-        _enemySet.SetActive(true);
+        if(_enemySet != null) _enemySet.SetActive(true);
         Instantiate(_effect, transform.position, transform.rotation);
         Destroy(this.gameObject);
     }
