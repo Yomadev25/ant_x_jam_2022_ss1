@@ -16,6 +16,7 @@ public class Boss : MonoBehaviour
     [Header("AI REFERENCES")]
     [SerializeField] private float _maxDistance;
     [SerializeField] private Animator _anim;
+    [SerializeField] private GameObject _barrier;
     private Transform _targetPos;
     private NavMeshAgent _navMesh;
 
@@ -28,7 +29,9 @@ public class Boss : MonoBehaviour
 
     [Header("EFFECTS")]
     [SerializeField] private GameObject _dieEffect;
+    [SerializeField] private AudioSource _boomSound;
 
+    int damage = 0;
     bool isPhaseTwo = false;
     bool isAttack;
     bool isRest;
@@ -58,7 +61,25 @@ public class Boss : MonoBehaviour
             if(!isRest) Patrol();
         }
 
+        if (_hp <= 350)
+        {
+            if(!isPhaseTwo) PhaseTwo();
+        }
+
+        if (damage >= 100)
+            Rest();
+
+        _barrier.SetActive(isRest);
         _hpBar.fillAmount = _hp / _maxHp;
+    }
+
+    public void PhaseTwo()
+    {
+        Debug.Log("PHASE TWO");
+        isPhaseTwo = true;
+        _ammo += 3;
+        _navMesh.speed += 5;
+        _anim.SetBool("isPhaseTwo", true);
     }
 
     #region AI STATE
@@ -104,7 +125,7 @@ public class Boss : MonoBehaviour
         {
             StateChange(AIState.Attack);
         }
-        if (_navMesh.remainingDistance >= _maxDistance)
+        if (_navMesh.remainingDistance >= _maxDistance || isRest)
         {
             StateChange(AIState.Idle);
         }
@@ -192,9 +213,17 @@ public class Boss : MonoBehaviour
         StateChange(AIState.Patrol);
     }
 
-    void Stomp()
+    IEnumerator Stomp()
     {
+        if (isAttack) yield return null;
 
+        Debug.Log("BOSS IS ATTACK BY STOMP");
+        isAttack = true;
+
+
+        yield return new WaitForSeconds(1f);
+        isAttack = false;
+        StateChange(AIState.Patrol);
     }
 
     void Dash()
@@ -202,18 +231,30 @@ public class Boss : MonoBehaviour
 
     }
 
-    public void Rest(bool _isrest)
+    public void Rest()
     {
-        isRest = _isrest;
+        isRest = true;
+        damage = 0;
+        _barrier.SetActive(true);
+        Level4.LevelManager.instance.Phase();
+        _anim.SetBool("isPatrol", false);
+    }
+
+    public void Unrest()
+    {
+        isRest = false;
+        _barrier.SetActive(false);
     }
     #endregion
 
     IEnumerator Die()
     {
+        _boomSound.Play();
         Instantiate(_dieEffect, transform.position, transform.rotation);
         _anim.SetTrigger("Death");
         _navMesh.isStopped = true;
-        yield return new WaitForSeconds(1.5f);       
+        yield return new WaitForSeconds(1.5f);
+        Level4.LevelManager.instance.Complete();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -221,6 +262,7 @@ public class Boss : MonoBehaviour
         if (other.CompareTag("Bullet"))
         {
             _hp--;
+            damage++;
         }
     }
 }

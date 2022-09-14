@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.7
-  secondsUntilDestroy: 1.2
+  secondsUntilDestroy: 0.2
   _effect: {fileID: 9151609772049252293, guid: 491f37f9c53bbdd46a4b72e8b716153e, type: 3}
 --- !u!1 &8059994104592160155
 GameObject:

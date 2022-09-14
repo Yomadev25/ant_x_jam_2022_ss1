@@ -23,13 +23,16 @@ public class UserInterface : MonoBehaviour
     private Player _player;
     private PlayerCamera _playerCam;
 
-    void Start()
+    private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(this.gameObject);
+    }
 
+    void Start()
+    {
         _player = FindObjectOfType<Player>();
         _playerCam = FindObjectOfType<PlayerCamera>();
     }

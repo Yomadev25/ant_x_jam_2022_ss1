@@ -11,13 +11,16 @@ public class Transition : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float _fadeSpeed;
 
-    void Start()
+    private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(this.gameObject);
+    }
 
+    void Start()
+    {
         _panel = GetComponent<CanvasGroup>();
         _panel.alpha = 1f;
 
