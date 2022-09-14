@@ -95,7 +95,7 @@ public class Turret : MonoBehaviour
         if (currentState != AIState.Attack) yield return null;
        
         float t = 0;
-        while (t < 1.5f)
+        while (t < 1f)
         {
             Vector3 direction = (_targetPos.position - _headPos.position).normalized;
             Quaternion rotGoal = Quaternion.LookRotation(direction);
@@ -106,12 +106,12 @@ public class Turret : MonoBehaviour
 
         for (int i = 0; i < _ammo; i++)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
             Instantiate(_bulletPrefabs, _gunPos.position, _gunPos.rotation);
             _gunSound.Play();
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         StateChange(AIState.Idle);
     }
     #endregion

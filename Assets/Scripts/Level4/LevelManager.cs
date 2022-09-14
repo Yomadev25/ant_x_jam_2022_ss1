@@ -9,6 +9,7 @@ namespace Level4
         public static Level4.LevelManager instance;
 
         [SerializeField] private GameObject _panelSet;
+        [SerializeField] private GameObject _notification;
         private int targetPanel;
         private int panel;
 
@@ -31,6 +32,14 @@ namespace Level4
         {
             Instantiate(_panelSet, transform.position, transform.rotation);
             targetPanel = GameObject.FindGameObjectsWithTag("Key").Length;
+            StartCoroutine(Notification());
+        }
+
+        IEnumerator Notification()
+        {
+            _notification.SetActive(true);
+            yield return new WaitForSeconds(5f);
+            _notification.SetActive(false);
         }
 
         public void GetScore()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Key : MonoBehaviour
 {
     [SerializeField] private GameObject _effect;
+    [SerializeField] private AudioSource _sound;
     Level2.LevelManager _levelManager;
 
     private void Start()
@@ -18,7 +19,8 @@ public class Key : MonoBehaviour
         {
             _levelManager.GetScore();
             Instantiate(_effect, this.transform.position, this.transform.rotation);
-            Destroy(this.gameObject);
+            _sound.Play();
+            Destroy(this.gameObject);            
         }
     }
 }

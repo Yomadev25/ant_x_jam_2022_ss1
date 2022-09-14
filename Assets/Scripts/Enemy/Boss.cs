@@ -29,6 +29,10 @@ public class Boss : MonoBehaviour
 
     [Header("EFFECTS")]
     [SerializeField] private GameObject _dieEffect;
+
+    [Header("SOUND EFFECTS")]
+    [SerializeField] private AudioSource _laserSound;
+    [SerializeField] private AudioSource _missileSound;
     [SerializeField] private AudioSource _boomSound;
 
     int damage = 0;
@@ -172,6 +176,7 @@ public class Boss : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             Instantiate(_bulletPrefabs, _gunPos[0].position, _gunPos[0].rotation);
             Instantiate(_bulletPrefabs, _gunPos[1].position, _gunPos[1].rotation);
+            _laserSound.Play();
         }
 
         yield return new WaitForSeconds(1f);
@@ -202,10 +207,12 @@ public class Boss : MonoBehaviour
         _lineOfSight.SetActive(false);
 
         Instantiate(_missilePrefabs, _gunPos[0].transform.position, _gunPos[0].transform.rotation);
+        _missileSound.Play();
         if (isPhaseTwo)
         {
             yield return new WaitForSeconds(0.1f);
             Instantiate(_missilePrefabs, _gunPos[1].transform.position, _gunPos[1].transform.rotation);
+            _missileSound.Play();
         }
 
         yield return new WaitForSeconds(1f);
@@ -249,6 +256,18 @@ public class Boss : MonoBehaviour
 
     IEnumerator Die()
     {
+        GameObject[] laser = GameObject.FindGameObjectsWithTag("EnemyBullet");
+        for (int i = 0; i < laser.Length; i++)
+        {
+            Destroy(laser[i]);
+        }
+
+        GameObject[] missile = GameObject.FindGameObjectsWithTag("Missile");
+        for (int i = 0; i < missile.Length; i++)
+        {
+            Destroy(missile[i]);
+        }
+
         _boomSound.Play();
         Instantiate(_dieEffect, transform.position, transform.rotation);
         _anim.SetTrigger("Death");

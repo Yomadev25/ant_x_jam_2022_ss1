@@ -501,6 +501,7 @@ GameObject:
   - component: {fileID: 410594370913494235}
   - component: {fileID: 410594370913494232}
   - component: {fileID: 410594370913494233}
+  - component: {fileID: 2807584576460753600}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Enemy
@@ -560,8 +561,21 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.3, y: 2.16, z: 3.3}
-  m_Center: {x: 1.1, y: 2.5, z: 0.21}
+  m_Size: {x: 3.3, y: 1.25, z: 3.3}
+  m_Center: {x: 1.1, y: 2.15, z: 0.21}
+--- !u!65 &2807584576460753600
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410594370913494230}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.82, y: 0.58, z: 0.41}
+  m_Center: {x: 1.1, y: 3.22, z: 0.21}
 --- !u!1 &410594371050521509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1061,7 @@ GameObject:
   - component: {fileID: 1265748445822208362}
   m_Layer: 0
   m_Name: Cube.033
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3219,7 +3233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5926549285415823317}
   m_LocalRotation: {x: -0.0011725094, y: -0.001172504, z: 0.70710576, w: 0.7071059}
-  m_LocalPosition: {x: 3.8004346, y: 10.56953, z: 1.7370939}
+  m_LocalPosition: {x: 3.89, y: 10.56953, z: 1.74}
   m_LocalScale: {x: 65.07591, y: 65.07591, z: 65.07591}
   m_Children: []
   m_Father: {fileID: 159877901847636259}

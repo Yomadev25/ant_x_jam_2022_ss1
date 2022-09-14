@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private PlayerCamera _playerCamera;
     [SerializeField] private Animator _anim;
     [SerializeField] private AudioSource _hitSound;
+    [SerializeField] private AudioSource _healSound;
 
     bool isDie;
 
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
 
     public void Heal(float heal)
     {
+        _healSound.Play();
         _hp += heal;
     }
 
@@ -71,6 +73,11 @@ public class Player : MonoBehaviour
         if (other.CompareTag("EnemyMissile"))
         {
             TakeDamage(5f);
+        }
+        if (other.CompareTag("Potion"))
+        {
+            Heal(15f);
+            Destroy(other.gameObject);
         }
     }
 

@@ -37,7 +37,7 @@ namespace Level2
 
             yield return new WaitForSeconds(1f);
             _doorCam.SetActive(true);
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
             _doorCam.SetActive(false);
 
             UserInterface.instance.StageStart();

@@ -36,7 +36,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: BasicCam
-    m_To: Door cam
+    m_To: Cutscene
     m_Blend:
       m_Style: 0
       m_Time: 2
@@ -47,7 +47,7 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 0
   - m_From: CombatCam
-    m_To: Door cam
+    m_To: Cutscene
     m_Blend:
       m_Style: 0
       m_Time: 2

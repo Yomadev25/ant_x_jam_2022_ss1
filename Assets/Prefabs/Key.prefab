@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effect: {fileID: 144420, guid: bd6e3e9b46bda134d90f86f3b35b0e89, type: 3}
+  _sound: {fileID: 0}
 --- !u!1001 &5668126198189232169
 PrefabInstance:
   m_ObjectHideFlags: 0
